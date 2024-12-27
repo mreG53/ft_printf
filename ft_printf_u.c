@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*   ft_printf_u.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgumus <<emgumus@student.42kocaeli.com.tr +#+  +:+       +#+        */
+/*   By: emgumus <emgumus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:02:30 by emgumus           #+#    #+#             */
-/*   Updated: 2024/11/27 18:02:30 by emgumus          ###   ########.fr       */
+/*   Updated: 2024/12/26 14:48:04 by emgumus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ int	ft_putstr(char *s)
 	int	i;
 
 	if (!s)
-		s = "(null)";
+	{
+		if (write(1, "(null)", 6) == -1)
+			return (-1);
+		return (6);
+	}
 	i = 0;
 	while (s[i])
 	{
@@ -80,7 +84,7 @@ int	ft_uint(unsigned int n)
 	return (i + 1);
 }
 
-int	ft_puthex(unsigned long int n, char *hex, int mode)
+int	ft_puthex(unsigned long n, char *hex, int mode)
 {
 	int	i;
 	int	result;

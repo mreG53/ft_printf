@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emgumus <<emgumus@student.42kocaeli.com.tr +#+  +:+       +#+        */
+/*   By: emgumus <emgumus@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 18:01:08 by emgumus           #+#    #+#             */
-/*   Updated: 2024/11/27 18:01:08 by emgumus          ###   ########.fr       */
+/*   Updated: 2024/12/26 14:48:05 by emgumus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 int	ft_format(va_list args, char c)
 {
+	unsigned long	ptr;
+
 	if (c == 'c')
 		return (ft_putchar(va_arg(args, int)));
 	else if (c == 's')
 		return (ft_putstr(va_arg(args, char *)));
-	else if (c == 'i')
-		return (ft_putnbr(va_arg(args, int)));
-	else if (c == 'd')
+	else if (c == 'i' || c == 'd')
 		return (ft_putnbr(va_arg(args, int)));
 	else if (c == 'u')
 		return (ft_uint(va_arg(args, unsigned int)));
@@ -30,10 +30,15 @@ int	ft_format(va_list args, char c)
 	else if (c == 'x')
 		return (ft_puthex(va_arg(args, unsigned int), "0123456789abcdef", 0));
 	else if (c == 'p')
-		return (ft_puthex(va_arg(args, unsigned long), "0123456789abcdef", 1));
+	{
+		ptr = (unsigned long)va_arg(args, void *);
+		if (ptr == 0)
+			return (ft_putstr("(nil)"));
+		return (ft_puthex(ptr, "0123456789abcdef", 1));
+	}
 	else if (c == '%')
 		return (ft_putchar('%'));
-	return (0);
+	return (-1);
 }
 
 int	ft_logic(va_list args, const char *format)
@@ -68,6 +73,8 @@ int	ft_printf(const char *format, ...)
 	int		i;
 	va_list	args;
 
+	if (!format)
+		return (-1);
 	va_start(args, format);
 	i = ft_logic(args, format);
 	va_end(args);

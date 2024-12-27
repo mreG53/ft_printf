@@ -8,7 +8,7 @@ OBJ			= $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME), $(OBJ)
+	ar rcs $(NAME) $(OBJ)
 
 clean:
 	rm -rf $(OBJ)
